@@ -30,7 +30,18 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-lgpl</artifactId>
 			<version>1.9.13</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+			<groupId>geronimo-spec</groupId>
+			<artifactId>geronimo-spec-servlet</artifactId>
+			<version>2.4-rc4</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.macs</groupId>
+			<artifactId>sabreclient</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
