@@ -26,10 +26,13 @@ public class FlightSearchAction {
 	private static Logger logger = LoggerFactory.getLogger(FlightSearchAction.class);
 	
 	public static void queryFlights(ReturnData returnData,HttpServletRequest request){
-		String departDate = request.getParameter("departDate");
-		String returnDate = request.getParameter("returnDate");
-		String fromCity = request.getParameter("fromCity");
-		String toCity = request.getParameter("toCity");
+		String departDate = request.getParameter("query.departDate");
+		String returnDate = request.getParameter("query.returnDate");
+		if(returnDate.trim().length() == 0){
+			returnDate = null;
+		}
+		String fromCity = request.getParameter("query.fromCity");
+		String toCity = request.getParameter("query.toCity");
 		SabreConnection conn = null;
 		try {
 			conn = SabreConnectionFactory.openConnection();

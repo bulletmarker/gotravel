@@ -62,8 +62,8 @@ public class JsonActionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String actionName = request.getParameter("actionName");
-		String methodName = request.getParameter("actionMethod");
+		//String actionName = request.getParameter("actionName");
+		//String methodName = request.getParameter("actionMethod");
 		ReturnData rd = new ReturnData();
 		try {
 			FlightSearchAction.queryFlights(rd,request);
@@ -73,6 +73,9 @@ public class JsonActionServlet extends HttpServlet {
 			rd.setErrorCode(e.getErrorMessage() + ",Severity:" + e.getSeverity() + ",StackTrace:" + e.getStackTrace());
 		}
 		String json = mapper.writeValueAsString(rd);
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().append(json);
+		response.getWriter().close();
 		logger.debug(json);
 	}
 

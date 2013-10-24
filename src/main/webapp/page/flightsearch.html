@@ -18,72 +18,57 @@
 <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
 <body>
-	<div class="container" style="margin-top:10px;">
+	<div class="container panel panel-primary" style="margin-top:10px;">
 		<div class="row">
 			<div class="form-group col-lg-3">
 				<h1>Flight Search</h1>
 			</div>
 		</div>
-		<form role="form">
+		<form id="queryForm" role="form">
 			<!-- Example row of columns -->
 			<div class="row">
 				<div class="form-group col-lg-3">
-					<label for="exampleInputEmail1">From:</label> <input type="text"
-						class="form-control" id="exampleInputEmail1"
+					<label for="query.fromCity">From:</label><input type="text"
+						class="form-control" name="query.fromCity" id="query.fromCity"
 						placeholder="Enter from city">
 				</div>
 				<div class="form-group col-lg-3">
-					<label for="exampleInputPassword1">To:</label> <input
-						type="text" class="form-control" id="exampleInputPassword1"
+					<label for="query.toCity">To:</label> <input
+						type="text" class="form-control" name="query.toCity" id="query.toCity"
 						placeholder="Enter to city">
 				</div>
 			</div>
 			<div class="row">
-				<!-- <div class="form-group col-lg-3">
-					<label for="depart_date">Depart:</label>
-					<div class="input-group date form_date col-lg-3" data-date="" data-date-format="yyyy-MM-dd" data-link-field="depart_date" data-link-format="yyyy-mm-dd">
-						<input type="text" class="form-control" placeholder="Enter depart date" readonly/>
-					</div>
-					<input type="hidden" id="depart_date" value="" />
-				</div>
-				
 				<div class="form-group col-lg-3">
-					<label for="exampleInputPassword1">Return:</label>
-					<div>
-						<input type="text" class="form-control" placeholder="Enter return date" readonly>
-					</div>
-				</div> -->
-
-				<div class="form-group col-lg-3">
-					<label for="depart_date">Depart:</label>
+					<label for="departDate">Depart:</label>
 					<div class="input-group date form_date" data-date=""
-						data-date-format="yyyy-mm-dd" data-link-field="depart_date"
-						data-link-format="yyyy-mm-dd">
+						data-date-format="yyyy-mm-ddThh:ii" data-link-field="departDate"
+						data-link-format="mm-ddThh:ii">
+						<input class="form-control" size="16" type="text" value=""
+							readonly><span class="input-group-addon"><span
+							class="glyphicon glyphicon-remove"></span></span> <span
+							class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+					<input type="hidden" name="query.departDate" id="departDate" value=""/>
+				</div>
+				<div class="form-group col-lg-3">
+				    <label for="returnDate">Return:</label>
+					<div class="input-group date form_date" data-date=""
+						data-date-format="yyyy-mm-ddThh:ii" data-link-field="returnDate"
+						data-link-format="mm-ddThh:ii">
 						<input class="form-control" size="16" type="text" value=""
 							readonly> <span class="input-group-addon"><span
 							class="glyphicon glyphicon-remove"></span></span> <span
 							class="input-group-addon"><span
 							class="glyphicon glyphicon-calendar"></span></span>
 					</div>
-					<input type="hidden" id="depart_date" value="" /><br />
-				</div>
-				<div class="form-group col-lg-3">
-					<label for="return_date">Return:</label>
-					<div class="input-group date form_date" data-date=""
-						data-date-format="yyyy-mm-dd" data-link-field="return_date"
-						data-link-format="yyyy-mm-dd">
-						<input class="form-control" size="16" type="text" value=""
-							readonly> <span class="input-group-addon"><span
-							class="glyphicon glyphicon-remove"></span></span> <span
-							class="input-group-addon"><span
-							class="glyphicon glyphicon-calendar"></span></span>
-					</div>
-					<input type="hidden" id="return_date" value="" /><br />
+					<input type="hidden" id="returnDate" name="query.returnDate" value="" />
 				</div>				
 			</div>
 			<div class="row">
 				<div class="form-group col-lg-6">
-					<button type="submit" class="btn btn-primary btn-block">SEARCH FLIGHT</button>
+					<a class="btn btn-primary btn-block" onclick="searchFlight();" href="javascript:void(0);">SEARCH FLIGHT</a>
 				</div>
 			</div>
 		</form>
@@ -102,10 +87,26 @@
 			autoclose : 1,
 			todayHighlight : 1,
 			startView : 2,
-			minView : 2,
+			minView : 1,
 			forceParse : 0,
 			pickerPosition:'bottom-left'
 		});
+		
+		function searchFlight() {
+			var querydata = $('#queryForm').serialize();
+			$.ajax({
+				type : 'POST',
+				url :'/gotravel/json',
+				dataType : 'json',
+				data : querydata,
+				success : function(data, textStatus, jqXHR){
+					alert('success ' + JSON.stringify(data));
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+					alert('error ' + textStatus);
+				}
+			});
+		}
 	</script>
 </body>
 </html>
