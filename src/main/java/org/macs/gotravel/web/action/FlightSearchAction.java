@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.itsum.sabre.client.connection.SabreConnection;
 import com.itsum.sabre.client.connection.SabreConnectionFactory;
+import com.itsum.sabre.client.dto.ota.airavail.OTAAirAvailRS;
 import com.itsum.sabre.client.dto.ota.airavail.OTA_AirAvailLLSOutput;
 import com.itsum.sabre.client.exception.SabreClientException;
 import com.itsum.sabre.service.OTA_AirAvailService;
@@ -36,10 +37,11 @@ public class FlightSearchAction {
 		SabreConnection conn = null;
 		try {
 			conn = SabreConnectionFactory.openConnection();
-			OTA_AirAvailLLSOutput output = OTA_AirAvailService.queryAvail(conn,departDate, returnDate,fromCity, toCity);
+			OTAAirAvailRS rs = OTA_AirAvailService.queryAvail(conn,departDate, returnDate,fromCity, toCity);
 			FlightSearchReturnDTO flightSearchReturnDTO = new FlightSearchReturnDTO();
-			flightSearchReturnDTO.setAirAvail(output.getRs());
+			flightSearchReturnDTO.setAirAvail(rs);
 			returnData.setData(flightSearchReturnDTO);
+			returnData.setSuccess(true);
 			logger.debug("OTA_AirAvailService 调用成功");
 		} finally {
 			if (conn != null) {

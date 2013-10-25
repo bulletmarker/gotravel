@@ -69,8 +69,13 @@ public class JsonActionServlet extends HttpServlet {
 			FlightSearchAction.queryFlights(rd,request);
 		} catch (SabreClientException e) {
 			rd.setSuccess(false);
-			rd.setError(e.getErrorCode());
-			rd.setErrorCode(e.getErrorMessage() + ",Severity:" + e.getSeverity() + ",StackTrace:" + e.getStackTrace());
+			rd.setErrorCode(e.getErrorCode());
+			rd.setError(e.getErrorMessage() + ",Severity:" + e.getSeverity() + ",StackTrace:" + e.getStackTrace());
+		}catch(Throwable e){
+			logger.error("call action error" , e);
+			rd.setSuccess(false);
+			rd.setErrorCode("call action error");
+			rd.setError(e.getMessage());
 		}
 		String json = mapper.writeValueAsString(rd);
 		response.setContentType("application/json;charset=UTF-8");
