@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="../css/bootstrap.css">
 <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
+<link rel="stylesheet" href="../css/jquery-ui-1.10.3.custom.css">
 <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
 <link rel="stylesheet" href="../css/main.css">
 <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -47,11 +48,13 @@
 										<label for="query.fromCity">From:</label><input type="text"
 											class="form-control" name="query.fromCity" id="fromCity"
 											placeholder="Enter from city">
+										<p class="help-block"></p>
 									</div>
 									<div class="form-group">
 										<label for="query.toCity">To:</label> <input type="text"
 											class="form-control" name="query.toCity" id="toCity"
 											placeholder="Enter to city">
+										<p class="help-block"></p>
 									</div>
 									<div class="form-group">
 										<label for="departDate">Depart:</label>
@@ -65,19 +68,6 @@
 												class="glyphicon glyphicon-calendar"></span></span>
 										</div>
 										<input type="hidden" name="query.departDate" id="departDate" value="" />
-									</div>
-									<div class="form-group">
-										<label for="returnDate">Return:</label>
-										<div class="input-group date form_date" data-date=""
-											data-date-format="yyyy-mm-ddThh:ii"
-											data-link-field="returnDate" data-link-format="mm-ddThh:ii">
-											<input class="form-control" size="16" type="text" value=""
-												readonly> <span class="input-group-addon"><span
-												class="glyphicon glyphicon-remove"></span></span> <span
-												class="input-group-addon"><span
-												class="glyphicon glyphicon-calendar"></span></span>
-										</div>
-										<input type="hidden" id="returnDate" name="query.returnDate" value="" />
 									</div>
 									
 									<div id="queryInputAlertInfo" class="alert alert-danger alert-dismissable" style="display:none;">
@@ -96,7 +86,6 @@
 						<div class="panel panel-primary">
 							<div class="panel-heading">Error Info</div>
 							<div id="errorInfo" class="panel-body">
-
 							</div>
 						</div>
 					</div>
@@ -104,137 +93,197 @@
 			</div>
 		</div>
 	</div>
+	<div id="output"></div>
 	<script>
 		window.jQuery|| document.write('<script src="../js/vendor/jquery-1.10.1.js"><\/script>')
 	</script>
 	<script src="../js/vendor/bootstrap.min.js"></script>
 	<script src="../js/vendor/bootstrap-datetimepicker.js"></script>
+	<script src="../js/vendor/jquery-ui-1.10.3.custom.js"></script>
 	<script src="../js/plugins.js"></script>
 	<script src="../js/main.js"></script>
+	<script src="../data/airports.js"></script>
 	<script type="text/javascript">
 	var OriginDestinationOptionMediaHTML = '<li class="list-group-item"><span class="label label-success stopover pull-right">Success</span></li>';
-	var flightsegmentHtml = '<div class="media"><a class="pull-left" href="#"></a><div class="media-body"><h4 class="media-heading"></h4></div></div>';
 	
-		$('.form_date').datetimepicker({
-			language : 'fr',
-			weekStart : 1,
-			todayBtn : 1,
-			autoclose : 1,
-			todayHighlight : 1,
-			startView : 2,
-			minView : 1,
-			forceParse : 0,
-			pickerPosition:'bottom-left'
-		});
+	var flightsegmentHtml = '<div class="media"><a class="pull-left" href="#"></a><div class="media-body"><h4 class="media-heading"></h4></div></div>';
 
-		function searchFlight(e,but) {
-			$(but).addClass('disabled');
-			var msg = '';
-			//validate
-			try{
-				if($.trim($('#fromCity').val()) == ''){
-					throw 'Please type from city.';
-				}
-				if($.trim($('#toCity').val()) == ''){
-					throw 'Please type to city.';
-				}
-				if($.trim($('#departDate').val()) == ''){
-					throw 'Please type depart date.';
-				}
-			}catch(e){
-				msg = e;
+	$('.form_date').datetimepicker({
+		language : 'fr',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		minView : 1,
+		forceParse : 0,
+		pickerPosition:'bottom-left'
+	});
+		
+	$('#fromCity').autocomplete(
+		{
+		autoFocus : true,
+		source:function(request, response){
+		  var results = $.ui.autocomplete.filter(airports, request.term);
+		  response(results.slice(0, 10));
+		},
+		change:function(event, ui){
+			if(ui.item == null){
+				$(this).val('');
+				$(this).next('p').html('');
+				$(this).next('p').hide();
 			}
-			if(msg == ''){
-				$('#queryInputAlertInfo').hide();
-				$('#queryInputAlertInfo').empty();
-			}else{
-				$('#queryInputAlertInfo').html(msg);
-				$('#queryInputAlertInfo').show();
-				$(but).removeClass('disabled');
-				return false;
+		},
+		select:function(event, ui){
+			$(this).next('p').html("<strong>Airport:</strong>  " + ui.item.label);
+			$(this).next('p').show();
+		}
+		}).data('ui-autocomplete')._renderItem = function( ul, item ) {
+			var term = $('#fromCity').val();
+			var reg = new RegExp(term,'i');
+			var label = item.label.replace(reg,'<strong>$&</strong>')
+			return $( "<li>" )
+			.append( "<a>" + label + "</a>" )
+			.appendTo(ul);
+		};
+		
+	$('#toCity').autocomplete(
+			{
+			autoFocus : true,
+			source:function(request, response){
+			  var results = $.ui.autocomplete.filter(airports, request.term);
+			  results = results.slice(0, 10);
+			  response(results);
+			},
+			change:function(event, ui){
+				if(ui.item == null){
+					$(this).val('');
+					$(this).next('p').html('');
+					$(this).next('p').hide();
+				}
+			},
+			select:function(event, ui){
+				$(this).next('p').html("<strong>Airport:</strong>  " + ui.item.label);
+				$(this).next('p').show();
 			}
-			var querydata = $('#queryForm').serialize();
-			$('#ajaxLoader').show();
-			//清除上次查询数据
-			$('#resultContent').empty();
-			$('#errorInfo').empty();
-			$('#searchResults').html("0");
-			$.ajax({
-				type : 'POST',
-				//url :'/gotravel/test.json',
-				url :'/gotravel/json',
-				dataType : 'json',
-				data : querydata,
-				success : function(data, textStatus, jqXHR){
-					if(data.success == true){//获取数据成功
-						//$('#resultContent').html(JSON.stringify(data));
-						showQueryResult(data);
-					}else{//获取数据失败
-						$('#errorInfo').html(
-							'<strong>errorCode:</strong>' + data.errorCode + '<br>'
-							+'<strong>error:</strong>' + data.error + '<br>'
-						);
-					}
-				},
-				error : function(XMLHttpRequest, textStatus, errorThrown){
-					$('#errorInfo').empty();
-					//一般为通讯异常或web server异常
+			}).data('ui-autocomplete')._renderItem = function( ul, item ) {
+			var term = $('#toCity').val();
+			var reg = new RegExp(term,'i');
+			var label = item.label.replace(reg,'<strong>$&</strong>')
+			return $( "<li>" )
+			.append( "<a>" + label + "</a>" )
+			.appendTo(ul);
+			};
+		
+	function searchFlight(e,but) {
+		$(but).addClass('disabled');
+		var msg = '';
+		//validate
+		try{
+			if($.trim($('#fromCity').val()) == ''){
+				throw 'Please type from city.';
+			}
+			if($.trim($('#toCity').val()) == ''){
+				throw 'Please type to city.';
+			}
+			if($.trim($('#departDate').val()) == ''){
+				throw 'Please type depart date.';
+			}
+		}catch(e){
+			msg = e;
+		}
+		if(msg == ''){
+			$('#queryInputAlertInfo').hide();
+			$('#queryInputAlertInfo').empty();
+		}else{
+			$('#queryInputAlertInfo').html(msg);
+			$('#queryInputAlertInfo').show();
+			$(but).removeClass('disabled');
+			return false;
+		}
+		var querydata = $('#queryForm').serialize();
+		$('#ajaxLoader').show();
+		//清除上次查询数据
+		$('#resultContent').empty();
+		$('#errorInfo').empty();
+		$('#searchResults').html("0");
+		$.ajax({
+			type : 'POST',
+			//url :'/gotravel/data/test/flightsearch.json'
+			url :'/gotravel/json',
+			dataType : 'json',
+			data : querydata,
+			success : function(data, textStatus, jqXHR){
+				if(data.success == true){//获取数据成功
+					//$('#resultContent').html(JSON.stringify(data));
+					showQueryResult(data);
+				}else{//获取数据失败
 					$('#errorInfo').html(
-							'<strong>textStatus:</strong>' + textStatus + '<br>'
-							+ "<strong>errorThrown:</strong>" + JSON.stringify(errorThrown) + '<br>'
-							+ "<strong>XMLHttpRequest:</strong>" + JSON.stringify(XMLHttpRequest)
+						'<strong>errorCode:</strong>' + data.errorCode + '<br>'
+						+'<strong>error:</strong>' + data.error + '<br>'
 					);
-				},
-				complete : function(XMLHttpRequest, textStatus){
-					$(but).removeClass('disabled');
-					$('#ajaxLoader').hide();
 				}
-			});
-		}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown){
+				$('#errorInfo').empty();
+				$('#ajaxLoader').hide();
+				//一般为通讯异常或web server异常
+				$('#errorInfo').html(
+						'<strong>textStatus:</strong>' + textStatus + '<br>'
+						+ "<strong>errorThrown:</strong>" + JSON.stringify(errorThrown) + '<br>'
+						+ "<strong>XMLHttpRequest:</strong>" + JSON.stringify(XMLHttpRequest)
+				);
+				
+			},
+			complete : function(XMLHttpRequest, textStatus){
+				$(but).removeClass('disabled');
+				$('#ajaxLoader').hide();
+			}
+		});
+	}
 		
 		
-		//显示查询结果
-		function showQueryResult(data){
-			if(!!data.data && !!data.data.airAvail.originDestinationOptions){
-				var originDestinationOptions = data.data.airAvail.originDestinationOptions.originDestinationOption;
-				if(originDestinationOptions.length == 0){
-					$('#resultContent').html('No Result.');
-				}else{
-					$('#searchResults').html('' + originDestinationOptions.length);
-					for(var i = 0;i < originDestinationOptions.length ; i++){
-						var flightSegments = originDestinationOptions[i].flightSegment;
-						if(!!flightSegments && flightSegments.length > 0){
-							var row = $(OriginDestinationOptionMediaHTML);
-							$('.stopover',row).html('Stop Over ' + (flightSegments.length -1));
-							//$('.media-heading',row).html();
-							for(var j = 0; j < flightSegments.length ; j++){
-								var flightSegment =  flightSegments[j];
-								var flightSegmentMedia = $(flightsegmentHtml);
-								$('.media-heading',flightSegmentMedia).append(
-								  '<strong>Airline:</strong>' + flightSegment.marketingAirline.code
-								  + ' <strong>FlightNumber:</strong>' +  flightSegment.flightNumber
-								);
-								$('.media-body',flightSegmentMedia).append(
-								flightSegment.originLocation.locationCode + ':' + flightSegment.departureDateTime 
-								+ ' <span class="glyphicon glyphicon-chevron-right"></span>' 
-								+ ' ' + flightSegment.destinationLocation.locationCode + '' + flightSegment.arrivalDateTime
-								+ '<br>');
-								row.append(flightSegmentMedia);
-							}
-							$('#resultContent').append(row);
+	//显示查询结果
+	function showQueryResult(data){
+		if(!!data.data && !!data.data.airAvail.originDestinationOptions){
+			var originDestinationOptions = data.data.airAvail.originDestinationOptions.originDestinationOption;
+			if(originDestinationOptions.length == 0){
+				$('#resultContent').html('No Result.');
+			}else{
+				$('#searchResults').html('' + originDestinationOptions.length);
+				for(var i = 0;i < originDestinationOptions.length ; i++){
+					var flightSegments = originDestinationOptions[i].flightSegment;
+					if(!!flightSegments && flightSegments.length > 0){
+						var row = $(OriginDestinationOptionMediaHTML);
+						$('.stopover',row).html('Stop Over ' + (flightSegments.length -1));
+						//$('.media-heading',row).html();
+						for(var j = 0; j < flightSegments.length ; j++){
+							var flightSegment =  flightSegments[j];
+							var flightSegmentMedia = $(flightsegmentHtml);
+							$('.media-heading',flightSegmentMedia).append(
+							  '<strong>Airline:</strong>' + flightSegment.marketingAirline.code
+							  + ' <strong>FlightNumber:</strong>' +  flightSegment.flightNumber
+							);
+							$('.media-body',flightSegmentMedia).append(
+							flightSegment.originLocation.locationCode + ':' + flightSegment.departureDateTime 
+							+ ' <span class="glyphicon glyphicon-chevron-right"></span>' 
+							+ ' ' + flightSegment.destinationLocation.locationCode + '' + flightSegment.arrivalDateTime
+							+ '<br>');
+							row.append(flightSegmentMedia);
 						}
+						$('#resultContent').append(row);
 					}
 				}
 			}
 		}
-		
-		function addTestData(){
-			$('#fromCity').val('SFO');
-			$('#toCity').val('HKG');
-			$('.departDateView').val('2013-11-20T14:00');
-			$('#departDate').val('11-20T14:00');
-			$('#returnDate').val('');
-		}
+	}
+	
+	function addTestData(){
+		$('#fromCity').val('SFO');
+		$('#toCity').val('HKG');
+		$('.departDateView').val('2013-11-20T14:00');
+		$('#departDate').val('11-20T14:00');
+	}
 	</script>
 </body>
 </html>

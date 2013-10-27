@@ -28,16 +28,12 @@ public class FlightSearchAction {
 	
 	public static void queryFlights(ReturnData returnData,HttpServletRequest request){
 		String departDate = request.getParameter("query.departDate");
-		String returnDate = request.getParameter("query.returnDate");
-		if(returnDate.trim().length() == 0){
-			returnDate = null;
-		}
 		String fromCity = request.getParameter("query.fromCity");
 		String toCity = request.getParameter("query.toCity");
 		SabreConnection conn = null;
 		try {
 			conn = SabreConnectionFactory.openConnection();
-			OTAAirAvailRS rs = OTA_AirAvailService.queryAvail(conn,departDate, returnDate,fromCity, toCity);
+			OTAAirAvailRS rs = OTA_AirAvailService.queryAvail(conn,departDate,fromCity, toCity);
 			FlightSearchReturnDTO flightSearchReturnDTO = new FlightSearchReturnDTO();
 			flightSearchReturnDTO.setAirAvail(rs);
 			returnData.setData(flightSearchReturnDTO);
