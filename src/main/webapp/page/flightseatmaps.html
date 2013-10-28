@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Flight Search</title>
+<title>Flight Seat Maps</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="../css/bootstrap.css">
@@ -35,15 +35,38 @@
 					</div>
 				</div>
 			</div><!-- query result end ! -->
-		
-			
 			<div class="col-lg-4">
 				<div class="container">
 					<div class="row">
 						<div class="panel panel-primary"><!-- query condition! -->
 							<div class="panel-heading">Flight Search</div>
 							<div class="panel-body">
-								<form id="queryForm" role="form">
+								<form id="queryForm" role="form">			
+									<div class="form-group">
+										<label for="airline">Airline:</label><input type="text"
+											class="form-control" name="query.airline" id="airline"
+											placeholder="Enter from city">
+										<p class="help-block"></p>
+									</div>
+									<div class="form-group">
+										<label for="flightnumber">Flight Number:</label> <input type="text"
+											class="form-control" name="query.flightnumber" id="flightnumber"
+											placeholder="Enter to city">
+										<p class="help-block"></p>
+									</div>
+									<div class="form-group">
+										<label for="departDate">Date:</label>
+										<div class="input-group date form_date" data-date=""
+											data-date-format="yyyy-mm-dd"
+											data-link-field="departDate" data-link-format="yyyy-mm-dd">
+											<input class="form-control departDateView" size="16" type="text" value=""
+												readonly><span class="input-group-addon"><span
+												class="glyphicon glyphicon-remove"></span></span> <span
+												class="input-group-addon"><span
+												class="glyphicon glyphicon-calendar"></span></span>
+										</div>
+										<input type="hidden" name="query.departDate" id="departDate" value="" />
+									</div>
 									<div class="form-group">
 										<label for="fromCity">From:</label><input type="text"
 											class="form-control" name="query.fromCity" id="fromCity"
@@ -55,29 +78,47 @@
 											class="form-control" name="query.toCity" id="toCity"
 											placeholder="Enter to city">
 										<p class="help-block"></p>
-									</div>
+									</div>										
 									<div class="form-group">
-										<label for="departDate">Depart:</label>
-										<div class="input-group date form_date" data-date=""
-											data-date-format="yyyy-mm-ddThh:ii"
-											data-link-field="departDate" data-link-format="mm-ddThh:ii">
-											<input class="form-control departDateView" size="16" type="text" value=""
-												readonly><span class="input-group-addon"><span
-												class="glyphicon glyphicon-remove"></span></span> <span
-												class="input-group-addon"><span
-												class="glyphicon glyphicon-calendar"></span></span>
-										</div>
-										<input type="hidden" name="query.departDate" id="departDate" value="" />
-									</div>
-									
+										<label for="query.toCity">Class:(A ~ Z)</label>
+										<select class="form-control" id="flightclass" name="query.flightclass">
+										  <option>A</option>
+										  <option>B</option>
+										  <option>C</option>
+										  <option>D</option>
+										  <option>E</option>
+										  <option>F</option>
+										  <option>G</option>
+										  <option>H</option>
+										  <option>I</option>
+										  <option>J</option>
+										  <option>K</option>
+										  <option>L</option>
+										  <option>M</option>
+										  <option>N</option>
+										  <option>O</option>
+										  <option>P</option>
+										  <option>Q</option>
+										  <option>R</option>
+										  <option>S</option>
+										  <option>T</option>
+										  <option>U</option>
+										  <option>V</option>
+										  <option>W</option>
+										  <option>X</option>
+										  <option>Y</option>
+										  <option>Z</option>									  										  										  										  										  
+										</select>
+										<p class="help-block"></p>
+									</div>									
 									<div id="queryInputAlertInfo" class="alert alert-danger alert-dismissable" style="display:none;">
 										
 									</div>
 									
-									<a class="btn btn-primary btn-block" onclick="searchFlight(event,this);" href="javascript:void(0);">SEARCH FLIGHT</a>
+									<a class="btn btn-primary btn-block" onclick="searchSeatMaps(event,this);" href="javascript:void(0);">SEARCH FLIGHT</a>
 									<a class="btn btn-default btn-block" onclick="addTestData();" href="javascript:void(0);">TEST DATA</a>
-									<input type="hidden" name="actionName" value="FlightSearchAction" />
-									<input type="hidden" name="actionMethod" value="queryFlights" />
+									<input type="hidden" name="actionName" value="FlightSeatMapsAction" />
+									<input type="hidden" name="actionMethod" value="querySeatMaps" />
 								</form>
 							</div>
 						</div><!-- query condition end!-->					
@@ -113,45 +154,17 @@
 		autoclose : 1,
 		todayHighlight : 1,
 		startView : 2,
-		minView : 1,
+		minView : 2,
 		forceParse : 0,
 		pickerPosition:'bottom-left'
 	});
 
 	$('#fromCity').autocomplete(
-		{
-		autoFocus : true,
-		source:function(request, response){
-		  var results = $.ui.autocomplete.filter(airports, request.term);
-		  response(results.slice(0, 10));
-		},
-		change:function(event, ui){
-			if(ui.item == null){
-				$(this).val('');
-				$(this).next('p').html('');
-				$(this).next('p').hide();
-			}
-		},
-		select:function(event, ui){
-			$(this).next('p').html("<strong>Airport:</strong>  " + ui.item.label);
-			$(this).next('p').show();
-		}
-		}).data('ui-autocomplete')._renderItem = function( ul, item ) {
-			var term = $('#fromCity').val();
-			var reg = new RegExp(term,'i');
-			var label = item.label.replace(reg,'<strong>$&</strong>')
-			return $( "<li>" )
-			.append( "<a>" + label + "</a>" )
-			.appendTo(ul);
-		};
-		
-	$('#toCity').autocomplete(
 			{
 			autoFocus : true,
 			source:function(request, response){
 			  var results = $.ui.autocomplete.filter(airports, request.term);
-			  results = results.slice(0, 10);
-			  response(results);
+			  response(results.slice(0, 10));
 			},
 			change:function(event, ui){
 				if(ui.item == null){
@@ -165,15 +178,53 @@
 				$(this).next('p').show();
 			}
 			}).data('ui-autocomplete')._renderItem = function( ul, item ) {
-			var term = $('#toCity').val();
-			var reg = new RegExp(term,'i');
-			var label = item.label.replace(reg,'<strong>$&</strong>')
-			return $( "<li>" )
-			.append( "<a>" + label + "</a>" )
-			.appendTo(ul);
+				var term = $('#fromCity').val();
+				var reg = new RegExp(term,'i');
+				var label = item.label.replace(reg,'<strong>$&</strong>')
+				return $( "<li>" )
+				.append( "<a>" + label + "</a>" )
+				.appendTo(ul);
 			};
-		
-	function searchFlight(e,but) {
+			
+		$('#toCity').autocomplete(
+				{
+				autoFocus : true,
+				source:function(request, response){
+				  var results = $.ui.autocomplete.filter(airports, request.term);
+				  results = results.slice(0, 10);
+				  response(results);
+				},
+				change:function(event, ui){
+					if(ui.item == null){
+						$(this).val('');
+						$(this).next('p').html('');
+						$(this).next('p').hide();
+					}
+				},
+				select:function(event, ui){
+					$(this).next('p').html("<strong>Airport:</strong>  " + ui.item.label);
+					$(this).next('p').show();
+				}
+				}).data('ui-autocomplete')._renderItem = function( ul, item ) {
+				var term = $('#toCity').val();
+				var reg = new RegExp(term,'i');
+				var label = item.label.replace(reg,'<strong>$&</strong>')
+				return $( "<li>" )
+				.append( "<a>" + label + "</a>" )
+				.appendTo(ul);
+				};	
+	
+	function addTestData(){
+		$('#fromCity').val('SFO');
+		$('#toCity').val('HKG');
+		$('#airline').val('AA');
+		$('#flightnumber').val('6079');
+		$('.departDateView').val('2013-11-20');
+		$('#departDate').val('2013-11-20');
+		$('#flightclass').val('F');
+	}
+	
+	function searchSeatMaps(e,but) {
 		$(but).addClass('disabled');
 		var msg = '';
 		//validate
@@ -187,6 +238,16 @@
 			if($.trim($('#departDate').val()) == ''){
 				throw 'Please type depart date.';
 			}
+			if($.trim($('#airline').val()) == ''){
+				throw 'Please type airline.';
+			}
+			if($.trim($('#flightnumber').val()) == ''){
+				throw 'Please type flightnumber.';
+			}
+			if($.trim($('#flightclass').val()) == ''){
+				throw 'Please type flightclass.';
+			}
+			
 		}catch(e){
 			msg = e;
 		}
@@ -207,7 +268,7 @@
 		$('#searchResults').html("0");
 		$.ajax({
 			type : 'POST',
-			url :'/gotravel/data/test/flightsearch.json',
+			url :'/gotravel/data/test/flightseatmaps.json',
 			//url :'/gotravel/json',
 			dataType : 'json',
 			data : querydata,
@@ -239,49 +300,23 @@
 			}
 		});
 	}
-		
-		
+	
 	//显示查询结果
 	function showQueryResult(data){
-		if(!!data.data && !!data.data.airAvail.originDestinationOptions){
-			var originDestinationOptions = data.data.airAvail.originDestinationOptions.originDestinationOption;
-			if(originDestinationOptions.length == 0){
-				$('#resultContent').html('No Result.');
-			}else{
-				$('#searchResults').html('' + originDestinationOptions.length);
-				for(var i = 0;i < originDestinationOptions.length ; i++){
-					var flightSegments = originDestinationOptions[i].flightSegment;
-					if(!!flightSegments && flightSegments.length > 0){
-						var row = $(OriginDestinationOptionMediaHTML);
-						$('.stopover',row).html('Stop Over ' + (flightSegments.length -1));
-						//$('.media-heading',row).html();
-						for(var j = 0; j < flightSegments.length ; j++){
-							var flightSegment =  flightSegments[j];
-							var flightSegmentMedia = $(flightsegmentHtml);
-							$('.media-heading',flightSegmentMedia).append(
-							  '<strong>Airline:</strong>' + flightSegment.marketingAirline.code
-							  + ' <strong>FlightNumber:</strong>' +  flightSegment.flightNumber
-							);
-							$('.media-body',flightSegmentMedia).append(
-							flightSegment.originLocation.locationCode + ':' + flightSegment.departureDateTime 
-							+ ' <span class="glyphicon glyphicon-chevron-right"></span>' 
-							+ ' ' + flightSegment.destinationLocation.locationCode + '' + flightSegment.arrivalDateTime
-							+ '<br>');
-							row.append(flightSegmentMedia);
-						}
-						$('#resultContent').append(row);
-					}
-				}
+		var airrows = data.data.seatMaps.seatMapResponse.seatMapDetails[0].airRows.airRow;
+		var rows = $('<ul></ul>');
+		for(var i = 0 ; i < airrows.length ; i++){
+			var airSeats = airrows[i].airSeats.airSeat;
+			for(var j = 0 ; j < airSeats.length ; j++){
+				var seat = $('<li></li>');
+				var airseat = airSeats[j];
+				seat.append('<li>' + JSON.stringify(airseat) + '</li>');
+				rows.append(seat);
 			}
 		}
-	}
+		$('#resultContent').append(rows);
+	}	
 	
-	function addTestData(){
-		$('#fromCity').val('SFO');
-		$('#toCity').val('HKG');
-		$('.departDateView').val('2013-11-20T14:00');
-		$('#departDate').val('11-20T14:00');
-	}
 	</script>
 </body>
 </html>

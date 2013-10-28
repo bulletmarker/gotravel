@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.macs.gotravel.web.action.FlightSearchAction;
+import org.macs.gotravel.web.action.FlightSeatMapsAction;
 import org.macs.gotravel.web.dto.ReturnData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,11 +63,15 @@ public class JsonActionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//String actionName = request.getParameter("actionName");
-		//String methodName = request.getParameter("actionMethod");
+		String actionName = request.getParameter("actionName");
+		String methodName = request.getParameter("actionMethod");
 		ReturnData rd = new ReturnData();
 		try {
-			FlightSearchAction.queryFlights(rd,request);
+			if("FlightSearchAction".equals(actionName)){
+				FlightSearchAction.queryFlights(rd,request);
+			}else if("FlightSeatMapsAction".equals(actionName)){
+				FlightSeatMapsAction.querySeatMaps(rd, request);
+			}
 		} catch (SabreClientException e) {
 			rd.setSuccess(false);
 			rd.setErrorCode(e.getErrorCode());
