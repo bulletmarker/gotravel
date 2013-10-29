@@ -14,6 +14,11 @@
 <link rel="stylesheet" href="../css/bootstrap.css">
 <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
 <link rel="stylesheet" href="../css/jquery-ui-1.10.3.custom.css">
+<style type="text/css">
+	.seat-map-row{
+		margin-bottom: 15px;
+	}
+</style>
 <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
 <link rel="stylesheet" href="../css/main.css">
 <script src="../js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -29,8 +34,8 @@
 							<img src="../img/ajax-loader.gif"/>
 						</div>
 						<div>
-							<ul id="resultContent" class="list-group">
-							</ul>
+							<div id="resultContent" class="container ">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -45,7 +50,7 @@
 									<div class="form-group">
 										<label for="airline">Airline:</label><input type="text"
 											class="form-control" name="query.airline" id="airline"
-											placeholder="Enter from city">
+											placeholder="Enter from city" value="AA" readonly>
 										<p class="help-block"></p>
 									</div>
 									<div class="form-group">
@@ -126,7 +131,7 @@
 					<div class="row">
 						<div class="panel panel-primary">
 							<div class="panel-heading">Error Info</div>
-							<div id="errorInfo" class="panel-body">
+							<div id="errorInfo" class="panel-body" style="height:200px;overflow-x:auto;overflow-y:auto;">
 							</div>
 						</div>
 					</div>
@@ -268,8 +273,8 @@
 		$('#searchResults').html("0");
 		$.ajax({
 			type : 'POST',
-			url :'/gotravel/data/test/flightseatmaps.json',
-			//url :'/gotravel/json',
+			//url :'/gotravel/data/test/flightseatmaps.json',
+			url :'/gotravel/json',
 			dataType : 'json',
 			data : querydata,
 			success : function(data, textStatus, jqXHR){
@@ -303,18 +308,87 @@
 	
 	//显示查询结果
 	function showQueryResult(data){
+		var layout = $('<div class="row"></div>');
+		
+		
+		var gridpanel = $('<div class="panel panel-default seatgrid col-md-8"><div class="panel-heading"><strong>Seat Grid</strong></div><div class="panel-body seatgrid"></div></div>');
+		
+		//initial seat grid
+		var gridcontainer = $('<div class="container"></div>');
+		var endNumber = data.data.seatMaps.seatMapResponse.seatMapDetails[0].cabinConfiguration[0].airRow.endNumber * 1;
+		var startNumber = data.data.seatMaps.seatMapResponse.seatMapDetails[0].cabinConfiguration[0].airRow.startNumber * 1;
+		var columns = data.data.seatMaps.seatMapResponse.seatMapDetails[0].cabinConfiguration[0].columnInformation;
+		//title
+		var gridtitlerow = $('<div class="row seat-map-row"></div>');
+		gridtitlerow.append('<div class="col-md-1"></div>');
+		var columnIndexMap = {};
+		var rowIndexMap = {};
+		for(var i = 0 ; i < columns.length ; i ++){
+			var column = columns[i];
+			gridtitlerow.append('<div class="col-md-1"><span class="label label-primary">' + column.seat[0].column + '</span></div>');
+			columnIndexMap[column.seat[0].column] = (i + 1);
+		}
+		gridcontainer.append(gridtitlerow);
+		for(var rownum = startNumber ; rownum <= endNumber; rownum ++){
+			var gridrow = $('<div class="row seat-map-row"></div>');
+			gridrow.append('<div class="col-md-1">' + rownum + '</div>');
+			rowIndexMap[rownum + ''] = (rownum - startNumber + 1);
+			for(var columnnum = 0 ; columnnum < columns.length ; columnnum++){
+				gridrow.append('<div class="col-md-1"><span class="label label-default">&nbsp;&nbsp;</span></div>');
+			}
+			gridcontainer.append(gridrow);
+		}
+		$('.seatgrid',gridpanel).append(gridcontainer);
+		
+		//initial help info
+		var helpinfocontainer = $('<div class="container"></div>');
+		var helpinfocontent = $('<ul class="list-unstyled"></ul>');
+		var cabinConfiguration = data.data.seatMaps.seatMapResponse.seatMapDetails[0].cabinConfiguration[0];
+		helpinfocontent.append('<li style="margin-top:5px;"><strong>wingRow: </strong>' + cabinConfiguration.wingRow + '</li>');
+		helpinfocontent.append('<li style="margin-top:5px;"><strong>class: </strong>' + cabinConfiguration.clazz + '</li>');
+		helpinfocontent.append('<li style="margin-top:5px;"><strong>location: </strong>' + cabinConfiguration.location + '</li>');
+		helpinfocontainer.append(helpinfocontent);
+		$('.seatgrid',gridpanel).append(helpinfocontainer);
+		
+		layout.append(gridpanel);
+		
+		//check vailability
 		var airrows = data.data.seatMaps.seatMapResponse.seatMapDetails[0].airRows.airRow;
-		var rows = $('<ul></ul>');
 		for(var i = 0 ; i < airrows.length ; i++){
-			var airSeats = airrows[i].airSeats.airSeat;
-			for(var j = 0 ; j < airSeats.length ; j++){
-				var seat = $('<li></li>');
-				var airseat = airSeats[j];
-				seat.append('<li>' + JSON.stringify(airseat) + '</li>');
-				rows.append(seat);
+			if(!!airrows[i].airSeats){
+				var airSeats = airrows[i].airSeats.airSeat;
+				for(var j = 0 ; j < airSeats.length ; j++){
+					var airseat = airSeats[j];
+					//get column index
+					c_index = columnIndexMap[airseat.seatNumber];
+					r_index = rowIndexMap[(airrows[i].rowNumber * 1) + ''];
+					//alert(r_index);
+					var row = $('.seat-map-row',gridcontainer).eq(r_index);
+					//alert(row.size());
+					var cel = $('.col-md-1',row).eq(c_index);
+					$('span',cel).removeClass('label-default').addClass('label-success');
+				}
 			}
 		}
-		$('#resultContent').append(rows);
+		
+		//initial flight segment info
+		var flightSegmentInfoPanel = $('<div class="panel panel-default col-md-4"><div class="panel-heading"><strong>Flight Segment Info</strong></div><div class="panel-body flight-segment-info"></div></div>');
+		var flightSegment = data.data.seatMaps.seatMapResponse.flightSegment[0];
+		var flightSegmentContent = $('<ul class="list-unstyled"></ul>');
+		flightSegmentContent.append('<li><strong>From: </strong>' +  flightSegment.originLocation.locationCode+ '<li>');
+		flightSegmentContent.append('<li><strong>Date: </strong>' +  flightSegment.departureDateTime + '</li>');
+		flightSegmentContent.append('<li><strong>To: </strong>' +  flightSegment.destinationLocation.locationCode + '</li>');
+		flightSegmentContent.append('<li><strong>Number: </strong>' +  flightSegment.flightNumber + '</li>');
+		flightSegmentContent.append('<li><strong>Class: </strong>' +  flightSegment.resBookDesigCode + '</li>');
+		flightSegmentContent.append('<li><strong>marketingAirline: </strong>' +  flightSegment.marketingAirline[0].code + '</li>');
+		flightSegmentContent.append('<li><strong>equipment: </strong>' +  flightSegment.equipment.airEquipType + '</li>');
+		flightSegmentContent.append('<li><hr></li>');
+		flightSegmentContent.append('<li style="margin-top:5px;"><span class="label label-success">&nbsp;&nbsp</span> Available</li>');
+		flightSegmentContent.append('<li style="margin-top:5px;"><span class="label label-default">&nbsp;&nbsp</span> Occupied</li>');
+		
+		$('.flight-segment-info',flightSegmentInfoPanel).append(flightSegmentContent);
+		layout.append(flightSegmentInfoPanel);
+		$('#resultContent').append(layout);
 	}	
 	
 	</script>

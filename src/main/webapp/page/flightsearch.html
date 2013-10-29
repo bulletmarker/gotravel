@@ -85,7 +85,7 @@
 					<div class="row">
 						<div class="panel panel-primary">
 							<div class="panel-heading">Error Info</div>
-							<div id="errorInfo" class="panel-body">
+							<div id="errorInfo" class="panel-body" style="height:200px;overflow-x:auto;overflow-y:auto;">
 							</div>
 						</div>
 					</div>
@@ -207,8 +207,8 @@
 		$('#searchResults').html("0");
 		$.ajax({
 			type : 'POST',
-			url :'/gotravel/data/test/flightsearch.json',
-			//url :'/gotravel/json',
+			//url :'/gotravel/data/test/flightsearch.json',
+			url :'/gotravel/json',
 			dataType : 'json',
 			data : querydata,
 			success : function(data, textStatus, jqXHR){
