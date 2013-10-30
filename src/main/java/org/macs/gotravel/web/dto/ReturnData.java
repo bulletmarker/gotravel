@@ -18,6 +18,16 @@ public class ReturnData implements IGoTravelDTO{
 	private String errorCode = null;
 	
 	private IGoTravelDTO data = null;
+	
+	private String stringData = null;
+
+	public String getStringData() {
+		return stringData;
+	}
+
+	public void setStringData(String stringData) {
+		this.stringData = stringData;
+	}
 
 	public Boolean getSuccess() {
 		return success;
