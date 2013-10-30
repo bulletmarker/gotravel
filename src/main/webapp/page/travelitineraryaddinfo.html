@@ -21,87 +21,174 @@
 <body>
 	<div class="container" style="margin-top: 10px;">
 		<div class="row">
-			<div class="col-lg-8"><!-- query result! -->
+			<div class="col-lg-8">
 				<div class="panel panel-primary">
 					<div class="panel-heading"><a class="btn btn-success" href="../index.html"><span class="glyphicon glyphicon-home"></span></a>&nbsp;&nbsp;Customer Info</div>
-					<div id="queryResultBody" class="panel-body">
+					<div  class="panel-body">
 						<div class="container" style="margin-top: 10px;">
+							<div id="passengerEditPanel" class="panel panel-default">
+								<div class="panel-heading">Passenger</div>
+								<div class="panel-body">
+									<div class="container col-md-12">
+										<div class="row">
+											<ul class="list-group">
+											  <li class="list-group-item">Cras justo odio</li>
+											  <li class="list-group-item">Dapibus ac facilisis in</li>
+											  <li class="list-group-item">Morbi leo risus</li>
+											  <li class="list-group-item">Porta ac consectetur ac</li>
+											  <li class="list-group-item">Vestibulum at eros</li>
+											</ul>
+										</div>
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group">
+											    	<label for="givenName">Given Name</label>
+											    	<input id="givenName" type="text" class="form-control" placeholder="Given Name">
+											 	 </div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+											    	<label for="exampleInputEmail1">Surname</label>
+											    	<input id="surname" type="text" class="form-control" placeholder="Surname">
+											 	</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+										    	 	<label for="infant">Infant</label>
+										    		<input id="infant" type="checkbox" class="form-control">
+											 	</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+										    	 	<label for="infant">Infant</label>
+										    		<input id="infant" type="checkbox" class="form-control">
+											 	</div>
+											</div>										
+										</div>							
+									</div>
+								</div>
+							</div>
 						
 							<div class="panel panel-default">
-								<div class="panel-heading">Contact Numbers</div>
-								<div id="queryResultBody" class="panel-body">
-									
+								<div class="panel-heading">ContactNumbers</div>
+								<div class="panel-body">
+
 								</div>
 							</div>
-							
-							<div class="panel panel-default">
-								<div class="panel-heading">PersonNames</div>
-								<div id="queryResultBody" class="panel-body">
-			
-								</div>
-							</div>
-							
+
 							<div class="panel panel-default">
 								<div class="panel-heading">Emails</div>
-								<div id="queryResultBody" class="panel-body">
-			
+								<div  class="panel-body">
 								</div>
 							</div>
-							
-							
 						</div>
 					</div>
 				</div>
-			</div><!-- query result end ! -->
-			
+			</div>
+
 			<div class="col-lg-4">
 				<div class="container">
 					<div class="row">
-						<div class="panel panel-primary"><!-- query condition! -->
+						<div class="panel panel-primary">
+							<!-- query condition! -->
 							<div class="panel-heading">Agency Info</div>
 							<div class="panel-body">
-								<div class="form-group">
-									<label for="addressLine">AddressLine:</label><input type="text"
-										class="form-control" name="agencyInfo.address.addressLine" id="addressLine" value="SIGNET TRAVEL" readonly>
-									<p class="help-block"></p>
-								</div>
-								<div class="form-group">
-									<label for="cityName">CityName:</label><input type="text"
-										class="form-control" name="agencyInfo.address.cityName" id="cityName" value="LOS ANGELES" readonly>
-									<p class="help-block"></p>
-								</div>
-								<div class="form-group">
-									<label for="countryCode">CountryCode:</label><input type="text"
-										class="form-control" name="agencyInfo.address.countryCode" id="countryCode" value="US" readonly>
-									<p class="help-block"></p>
-								</div>
-								<div class="form-group">
-									<label for="postalCode">PostalCode:</label><input type="text"
-										class="form-control" name="agencyInfo.address.postalCode" id="postalCode" value="91733" readonly>
-									<p class="help-block"></p>
-								</div>
-								<div class="form-group">
-									<label for="stateCountyProv ">StateCountyProv:</label><input type="text"
-										class="form-control" name="agencyInfo.address.stateCountyProv" id="stateCountyProv" value="CA" readonly>
-									<p class="help-block"></p>
-								</div>
-								<div class="form-group">
-									<label for="streetNmbr ">StreetNmbr:</label><input type="text"
-										class="form-control" name="agencyInfo.address.streetNmbr" id="streetNmbr" value="1170 Durfee Ave. Suite ES. El Monte" readonly>
-									<p class="help-block"></p>
-								</div>
-								<div class="form-group">
-									<label for="hosted">Hosted:</label><input type="text"
-										class="form-control" name="agencyInfo.address.vendorPrefs.airline.hosted" id="hosted" value="true" readonly>
-									<p class="help-block"></p>
+								<div class="container">
+									<div class="row">
+										<div class="panel panel-default">
+											<div class="panel-heading">Address</div>
+											<div class="panel-body">
+												<div class="form-group">
+													<label for="addressLine">AddressLine:</label><input
+														type="text" class="form-control"
+														name="agencyInfo.address.addressLine" id="addressLine"
+														value="SIGNET TRAVEL" readonly>
+												</div>
+												<div class="form-group">
+													<label for="cityName">CityName:</label><input type="text"
+														class="form-control" name="agencyInfo.address.cityName"
+														id="cityName" value="LOS ANGELES" readonly>
+												</div>
+												<div class="form-group">
+													<label for="countryCode">CountryCode:</label><input
+														type="text" class="form-control"
+														name="agencyInfo.address.countryCode" id="countryCode"
+														value="US" readonly>
+												</div>
+												<div class="form-group">
+													<label for="postalCode">PostalCode:</label><input
+														type="text" class="form-control"
+														name="agencyInfo.address.postalCode" id="postalCode"
+														value="91733" readonly>
+												</div>
+												<div class="form-group">
+													<label for="stateCountyProv ">StateCountyProv:</label><input
+														type="text" class="form-control"
+														name="agencyInfo.address.stateCountyProv"
+														id="stateCountyProv" value="CA" readonly>
+												</div>
+												<div class="form-group">
+													<label for="streetNmbr ">StreetNmbr:</label><input
+														type="text" class="form-control"
+														name="agencyInfo.address.streetNmbr" id="streetNmbr"
+														value="1170 Durfee Ave. Suite ES. El Monte" readonly>
+												</div>
+												<div class="form-group">
+													<label for="hosted">Hosted:</label><input type="text"
+														class="form-control"
+														name="agencyInfo.address.vendorPrefs.airline.hosted"
+														id="hosted" value="true" readonly>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+											<div class="panel panel-default">
+												<div class="panel-heading">Ticketing</div>
+												<div class="panel-body">
+													<div class="form-group">
+													<label for="pseudoCityCode">PseudoCityCode:</label><input type="text"
+														class="form-control"
+														name="agencyInfo.ticketing.pseudoCityCode"
+														id="pseudoCityCode" value="7RVC" readonly>											
+													</div>
+													<div class="form-group">
+													<label for="queueNumber">QueueNumber:</label><input type="text"
+														class="form-control"
+														name="agencyInfo.ticketing.queueNumber"
+														id="queueNumber" value="55" readonly>											
+													</div>
+													<div class="form-group">
+													<label for="shortText">ShortText:</label><input type="text"
+														class="form-control"
+														name="agencyInfo.ticketing.shortText"
+														id="shortText" value="TEST" readonly>											
+													</div>
+													<div class="form-group">
+													<label for="ticketTimeLimit">TicketTimeLimit:</label><input type="text"
+														class="form-control"
+														name="agencyInfo.ticketing.ticketTimeLimit"
+														id="ticketTimeLimit" value="" readonly>
+													</div>
+													<div class="form-group">
+													<label for="ticketType">TicketType:</label><input type="text"
+														class="form-control"
+														name="agencyInfo.ticketing.ticketType"
+														id="ticketType" value="" readonly>
+													</div>													
+												</div>
+											</div>
+									</div>
 								</div>
 							</div>
-						</div><!-- query condition end!-->					
+						</div>
+						<!-- query condition end!-->
 					</div>
 					<div class="row">
 						<div class="panel panel-primary">
 							<div class="panel-heading">Error Info</div>
-							<div id="errorInfo" class="panel-body" style="height:200px;overflow-x:auto;overflow-y:auto;">
+							<div id="errorInfo" class="panel-body"
+								style="height: 200px; overflow-x: auto; overflow-y: auto;">
 							</div>
 						</div>
 					</div>
@@ -109,7 +196,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="output"></div>
+	
 	<script>
 		window.jQuery|| document.write('<script src="../js/vendor/jquery-1.10.1.js"><\/script>')
 	</script>
