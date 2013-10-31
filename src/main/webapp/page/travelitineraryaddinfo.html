@@ -20,67 +20,218 @@
 </head>
 <body>
 	<div class="container" style="margin-top: 10px;">
+		<form id="bookDataForm">
 		<div class="row">
 			<div class="col-lg-8">
 				<div class="panel panel-primary">
 					<div class="panel-heading"><a class="btn btn-success" href="../index.html"><span class="glyphicon glyphicon-home"></span></a>&nbsp;&nbsp;Customer Info</div>
 					<div  class="panel-body">
 						<div class="container" style="margin-top: 10px;">
-							<div id="passengerEditPanel" class="panel panel-default">
-								<div class="panel-heading">Passenger</div>
-								<div class="panel-body">
-									<div class="container col-md-12">
-										<div class="row">
-											<ul class="list-group">
-											  <li class="list-group-item">Cras justo odio</li>
-											  <li class="list-group-item">Dapibus ac facilisis in</li>
-											  <li class="list-group-item">Morbi leo risus</li>
-											  <li class="list-group-item">Porta ac consectetur ac</li>
-											  <li class="list-group-item">Vestibulum at eros</li>
-											</ul>
+						<div class="panel panel-default">
+							<div class="panel-heading">Flight Segments</div>
+							<div class="panel-body">
+								<div class="container col-md-12 well">
+									<div class="row">
+										<div class="col-md-2">
+											<div class="form-group">
+												<label>Passenger:</label>
+										    	<input name="airBook.flightSegment.numberInParty[0]" type="text" class="form-control input-sm" value="1" readonly>
+										 	</div>
 										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-											    	<label for="givenName">Given Name</label>
-											    	<input id="givenName" type="text" class="form-control" placeholder="Given Name">
-											 	 </div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-											    	<label for="exampleInputEmail1">Surname</label>
-											    	<input id="surname" type="text" class="form-control" placeholder="Surname">
-											 	</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-										    	 	<label for="infant">Infant</label>
-										    		<input id="infant" type="checkbox" class="form-control">
-											 	</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-										    	 	<label for="infant">Infant</label>
-										    		<input id="infant" type="checkbox" class="form-control">
-											 	</div>
-											</div>										
-										</div>							
+										<div class="col-md-2">
+											<div class="form-group">
+												<label>Flight:</label>
+										    	<input name="airBook.flightSegment.flightNumber[0]" type="text" class="form-control input-sm" value="6079" readonly>
+										 	</div>
+										</div>										
+										<div class="col-md-2">
+											<div class="form-group">
+												<label>Airline:</label>
+										    	<input name="airBook.flightSegment.airline[0]" type="text" class="form-control input-sm" value="AA" readonly>
+										 	</div>
+										</div>
+										<div class="col-md-2">
+											<div class="form-group">
+												<label>Class:</label>
+										    	<input name="airBook.flightSegment.resBookDesigCode[0]" type="text" class="form-control input-sm" value="F" readonly>
+										 	</div>
+										</div>										
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<div class="form-group">
+										    	<input name="airBook.flightSegment.originLocation[0]" type="text" class="form-control input-sm" value="SFO" readonly>
+										 	</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<input name="airBook.flightSegment.departureDateTime[0]" type="text" class="form-control input-sm" value="2013-11-20T11:55" readonly>
+										 	</div>
+										</div>
+										<div class="col-md-1">
+											<div class="form-group">
+										    	<span class="glyphicon glyphicon-chevron-right"></span>
+										 	</div>
+										</div>										
+										<div class="col-md-2">
+											<div class="form-group">
+										    	<input name="airBook.flightSegment.destinationLocation[0]" type="text" class="form-control input-sm" value="HKG" readonly>
+										 	</div>
+										</div>										
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<input name="airBook.flightSegment.arrivalDateTime[0]" type="text" class="form-control input-sm" value="2013-11-21T18:55" readonly>
+										 	</div>
+										</div>										
+									</div>
+								</div>
+								
+								<input name="flightsegmentcount" type="hidden" value="1">
+							</div>
+						</div>
+						
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">Passenger</div>
+							<div class="panel-body">
+								<div class="container col-md-12">
+									<div class="row">
+										<div class="col-md-2">
+											<div class="form-group">
+										    	<label>No</label>
+										 	 </div>
+										</div>								    
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<label>Given Name</label>
+										 	 </div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<label>Surname</label>
+										 	</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+									    	 	<label for="infant">Infant</label>
+										 	</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2">
+											<div class="form-group">
+										    	<input name="personName.nameNumber[0]" type="text" class="form-control input-sm" value="1" readonly>
+										 	</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<input name="personName.givenName[0]" value="HOWARD" type="text" class="form-control input-sm" placeholder="Given Name">
+										 	 </div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<input name="personName.surname[0]" value="LIN" type="text" class="form-control input-sm" placeholder="Surname">
+										 	</div>
+										</div>
+										<div class="col-md-1">
+											<div class="form-group">
+									    		<input type="checkbox" class="input-sm">
+									    		<input name="personName.infant[0]" type="hidden" value="false">
+										 	</div>
+										</div>
+										<div class="col-md-3"> 
+											<span class="label label-primary">Primary</span>
+											<a class="btn btn btn-danger btn-xs pull-right sr-only" href="javascript:void(0);">
+											  <span class="glyphicon glyphicon-minus"></span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<input name="personcount" type="hidden" value="1">
+							</div> 
+							<div class="panel-footer">
+								<div class="container">
+									<div class="row">
+										<a class="btn btn-success btn-xs pull-right" href="javascript:void(0);" disabled="disabled">
+											<span class="glyphicon glyphicon-plus"></span>
+										</a>
 									</div>
 								</div>
 							</div>
+						</div>
+							
+						<div class="panel panel-default">
+							<div class="panel-heading">Contact Numbers</div>
+							<div class="panel-body">
+								<div class="container col-md-12">
+									<div class="row">
+										<div class="col-md-5">
+											<div class="form-group">
+										    	<input value="6052187" name="contactNumber.phone[0]" type="text" class="form-control input-sm" placeholder="Phone">
+										 	 </div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<select name="contactNumber.phoneUseType[0]" class="form-control input-sm">
+										    	  <option value="H" selected="selected">Home</option>
+												  <option value="A">Agency</option>
+												  <option value="B">Business</option>
+												  <option value="F">Fax</option>
+												</select>
+										 	</div>
+										</div>
+										<div class="col-md-4">
+											<a class="btn btn btn-danger btn-xs pull-right sr-only" href="javascript:void(0);">
+											  <span class="glyphicon glyphicon-minus"></span>
+											</a>
+											<input name="contactNumber.nameNumber[0]" type="hidden" value="1">
+										</div>
+									</div>
+								</div>
+							</div>
+							<input name="contactNumberCount" type="hidden" value="1">
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">Emails</div>
+							<div class="panel-body">
+								<div class="container col-md-12">
+									<div class="row">
+										<div class="col-md-5">
+											<div class="form-group">
+										    	<input value="HOWARD718@HOTMAIL.COM" name="email.address[0]" type="text" class="form-control input-sm" placeholder="Email">
+										 	 </div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+										    	<select name="email.type[0]" class="form-control input-sm">
+										    	  <option value="CC" selected="selected">For carbon copy</option>
+												  <option value="BC">For blind copy</option>
+												  <option value="FR">For from</option>
+												  <option value="To">For to</option>
+												</select>
+										 	</div>
+										</div>
+										<div class="col-md-4">
+											<a class="btn btn btn-danger btn-xs pull-right sr-only" href="javascript:void(0);">
+											  <span class="glyphicon glyphicon-minus"></span>
+											</a>
+											<input name="email.nameNumber[0]" type="hidden" value="1">
+										</div>											
+									</div>
+								</div>
+								<input name="emailcount" type="hidden" value="1">
+							</div>
+						</div>
 						
-							<div class="panel panel-default">
-								<div class="panel-heading">ContactNumbers</div>
-								<div class="panel-body">
-
-								</div>
+						<div class="container col-md-12">
+							<div id="ajaxLoader" style="display:none;">
+								<img src="../img/ajax-loader.gif"/>
 							</div>
-
-							<div class="panel panel-default">
-								<div class="panel-heading">Emails</div>
-								<div  class="panel-body">
-								</div>
+							<div id="bookpnrinfo">
 							</div>
+							<a id="bookItineraryBtn" class="btn btn-primary pull-right" onclick="bookItinerary();" href="javascript:void(0);">Book Itinerary</a>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -99,45 +250,31 @@
 											<div class="panel-heading">Address</div>
 											<div class="panel-body">
 												<div class="form-group">
-													<label for="addressLine">AddressLine:</label><input
-														type="text" class="form-control"
-														name="agencyInfo.address.addressLine" id="addressLine"
-														value="SIGNET TRAVEL" readonly>
+													<label>AddressLine:</label>
+													<input type="text" class="form-control" name="agencyInfo.address.addressLine" value="SIGNET TRAVEL" readonly>
 												</div>
 												<div class="form-group">
-													<label for="cityName">CityName:</label><input type="text"
-														class="form-control" name="agencyInfo.address.cityName"
-														id="cityName" value="LOS ANGELES" readonly>
+													<label>CityName:</label>
+													<input type="text" class="form-control" name="agencyInfo.address.cityName" value="LOS ANGELES" readonly>
 												</div>
 												<div class="form-group">
-													<label for="countryCode">CountryCode:</label><input
-														type="text" class="form-control"
-														name="agencyInfo.address.countryCode" id="countryCode"
-														value="US" readonly>
+													<label>CountryCode:</label>
+													<input type="text" class="form-control" name="agencyInfo.address.countryCode" value="US" readonly>
 												</div>
 												<div class="form-group">
-													<label for="postalCode">PostalCode:</label><input
-														type="text" class="form-control"
-														name="agencyInfo.address.postalCode" id="postalCode"
-														value="91733" readonly>
+													<label>PostalCode:</label>
+													<input type="text" class="form-control" name="agencyInfo.address.postalCode" value="91733" readonly>
 												</div>
 												<div class="form-group">
-													<label for="stateCountyProv ">StateCountyProv:</label><input
-														type="text" class="form-control"
-														name="agencyInfo.address.stateCountyProv"
-														id="stateCountyProv" value="CA" readonly>
+													<label>StateCountyProv:</label><input type="text" class="form-control" name="agencyInfo.address.stateCountyProv" value="CA" readonly>
 												</div>
 												<div class="form-group">
-													<label for="streetNmbr ">StreetNmbr:</label><input
-														type="text" class="form-control"
-														name="agencyInfo.address.streetNmbr" id="streetNmbr"
-														value="1170 Durfee Ave. Suite ES. El Monte" readonly>
+													<label>StreetNmbr:</label>
+													<input type="text" class="form-control" name="agencyInfo.address.streetNmbr" value="1170 Durfee Ave. Suite ES. El Monte" readonly>
 												</div>
 												<div class="form-group">
-													<label for="hosted">Hosted:</label><input type="text"
-														class="form-control"
-														name="agencyInfo.address.vendorPrefs.airline.hosted"
-														id="hosted" value="true" readonly>
+													<label>Hosted:</label>
+													<input type="text" class="form-control" name="agencyInfo.address.vendorPrefs.airline.hosted" value="true" readonly>
 												</div>
 											</div>
 										</div>
@@ -147,34 +284,24 @@
 												<div class="panel-heading">Ticketing</div>
 												<div class="panel-body">
 													<div class="form-group">
-													<label for="pseudoCityCode">PseudoCityCode:</label><input type="text"
-														class="form-control"
-														name="agencyInfo.ticketing.pseudoCityCode"
-														id="pseudoCityCode" value="7RVC" readonly>											
+													<label>PseudoCityCode:</label>
+													<input type="text" class="form-control" name="agencyInfo.ticketing.pseudoCityCode" value="7RVC" readonly>											
 													</div>
 													<div class="form-group">
-													<label for="queueNumber">QueueNumber:</label><input type="text"
-														class="form-control"
-														name="agencyInfo.ticketing.queueNumber"
-														id="queueNumber" value="55" readonly>											
+													<label>QueueNumber:</label>
+													<input type="text" class="form-control" name="agencyInfo.ticketing.queueNumber" value="55" readonly>											
 													</div>
 													<div class="form-group">
-													<label for="shortText">ShortText:</label><input type="text"
-														class="form-control"
-														name="agencyInfo.ticketing.shortText"
-														id="shortText" value="TEST" readonly>											
+													<label>ShortText:</label>
+													<input type="text" class="form-control" name="agencyInfo.ticketing.shortText" value="TEST" readonly>											
 													</div>
 													<div class="form-group">
-													<label for="ticketTimeLimit">TicketTimeLimit:</label><input type="text"
-														class="form-control"
-														name="agencyInfo.ticketing.ticketTimeLimit"
-														id="ticketTimeLimit" value="" readonly>
+													<label>TicketTimeLimit:</label>
+													<input type="text" class="form-control" name="agencyInfo.ticketing.ticketTimeLimit" value="" readonly>
 													</div>
 													<div class="form-group">
-													<label for="ticketType">TicketType:</label><input type="text"
-														class="form-control"
-														name="agencyInfo.ticketing.ticketType"
-														id="ticketType" value="" readonly>
+													<label>TicketType:</label>
+													<input type="text" class="form-control" name="agencyInfo.ticketing.ticketType" value="7TAW" readonly>
 													</div>													
 												</div>
 											</div>
@@ -195,6 +322,9 @@
 				</div>
 			</div>
 		</div>
+		<input type="hidden" name="actionName" value="TravelItineraryAddInfoAction" />
+		<input type="hidden" name="actionMethod" value="bookItinerary" />
+		</form>
 	</div>
 	
 	<script>
@@ -207,7 +337,46 @@
 	<script src="../js/main.js"></script>
 	<script src="../data/airports.js"></script>
 	<script type="text/javascript">
-	
+		function bookItinerary(){
+			var querydata =$('#bookDataForm').serialize();
+			$('#bookItineraryBtn').addClass('disabled');
+			$('#bookpnrinfo').html('');
+			$('#ajaxLoader').show();
+			$.ajax({
+				type : 'POST',
+				url :'/gotravel/json',
+				dataType : 'json',
+				data : querydata,
+				success : function(data, textStatus, jqXHR){
+					if(data.success == true){//获取数据成功
+						//$('#resultContent').html(JSON.stringify(data));
+						//alert('调用成功 pnr:' + data.stringData);
+						
+						$('#bookpnrinfo').html('<strong>Book air success , PNR:</strong>' + data.stringData);
+					}else{//获取数据失败
+						$('#errorInfo').html(
+							'<strong>errorCode:</strong>' + data.errorCode + '<br>'
+							+'<strong>error:</strong>' + data.error + '<br>'
+						);
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown){
+					$('#errorInfo').empty();
+					$('#ajaxLoader').hide();
+					//一般为通讯异常或web server异常
+					$('#errorInfo').html(
+							'<strong>textStatus:</strong>' + textStatus + '<br>'
+							+ "<strong>errorThrown:</strong>" + JSON.stringify(errorThrown) + '<br>'
+							+ "<strong>XMLHttpRequest:</strong>" + JSON.stringify(XMLHttpRequest)
+					);
+					
+				},
+				complete : function(XMLHttpRequest, textStatus){
+					$(bookItineraryBtn).removeClass('disabled');
+					$('#ajaxLoader').hide();
+				}
+			});		
+		}
 	</script>
 </body>
 </html>

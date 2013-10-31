@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.macs.gotravel.web.action.FlightSearchAction;
 import org.macs.gotravel.web.action.FlightSeatMapsAction;
+import org.macs.gotravel.web.action.TravelItineraryAddInfoAction;
 import org.macs.gotravel.web.dto.ReturnData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,8 @@ public class JsonActionServlet extends HttpServlet {
 				FlightSearchAction.queryFlights(rd,request);
 			}else if("FlightSeatMapsAction".equals(actionName)){
 				FlightSeatMapsAction.querySeatMaps(rd, request);
+			}else if("TravelItineraryAddInfoAction".equals(actionName)){
+				TravelItineraryAddInfoAction.bookItinerary(rd, request);
 			}
 		} catch (SabreClientException e) {
 			rd.setSuccess(false);

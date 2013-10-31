@@ -36,7 +36,7 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="page/flightsearch.html">Flight Search</a></li>
             <li><a href="page/flightseatmaps.html">Flight Seat Maps</a></li>
-            <li><a href="page/travelitineraryaddinfo.html">Travel Itinerary Add</a></li>
+            <li><a href="page/travelitineraryaddinfo.html">Book Air</a></li>
             <!--
             <li><a href="#about"></a></li>
             <li class="dropdown">
@@ -51,9 +51,9 @@
                 <li><a href="#">Separated link</a></li>
                 <li><a href="#">One more separated link</a></li>
               </ul>
-              
-            </li>
+            </li>-->
           </ul>
+          <!-- 
           <form class="navbar-form navbar-right">
             <div class="form-group">
               <input type="text" placeholder="Email" class="form-control">
@@ -72,18 +72,50 @@
       <div class="container">
         <h1>Go Travel</h1>
         <p></p>
-        <p><a class="btn btn-primary btn-lg" href="javascript:void(0);">Learn more &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="javascript:void(0);" disabled="disabled">Learn more &raquo;</a></p>
       </div>
     </div>
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-lg-4">
-          <h2>Filght Search</h2>
-          <p></p>
-          <p><a class="btn btn-default" href="javascript:void(0);">View details &raquo;</a></p>
+          <h2>Flight Search</h2>
+          <p><strong>功能:</strong>用于查询航班信息,输入出发城市、到达城市、出发时间，可以查询出符合条件的航班信息。</p>
+          <p>
+ 			<strong>问题:</strong>         
+          </p>
+          <ol>
+       		<li>IATA 三位城市代码没有完整数据字典;</li>
+       		<li>二位 航空公司代码(Airline)代码没有完整数据字典;</li>
+       	  </ol>
+          <p><a class="btn btn-default" href="page/flightsearch.html">Go to &raquo;</a></p>
         </div>
+        <div class="col-lg-4">
+          <h2>Flight Seat Maps</h2>
+          <p><strong>功能:</strong>用于查询航班段(Flight Segment)中可用座位的信息，输入条件为航班段信息，下一步可以考虑从航班信息查询跳转过来 。</p>
+          <p>
+ 			<strong>问题:</strong>         
+          </p>
+          <ol>
+       		<li>缺乏仓位信息代码对应的数据字典，各仓位代码对应的说明信息;</li>
+       		<li>缺乏座位特征代码对应的数据字典，各座位代码对应的说明信息;</li>
+       	  </ol>
+          <p><a class="btn btn-default" href="page/flightseatmaps.html">Go to &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <h2>Book Air</h2>
+          <p><strong>功能:</strong>添加乘客的个人信息、联系方式、航空代理机构信息，并通过仓位预定服务添加每位乘客的预定仓位信息
+          (下一步可以考虑关联航班信息查询功能)。该服务可以返回该行程的PNR代码，后期可以通过该代码继续维护乘客的行程信息。	
+          </p>
+          <p>
+ 			<strong>问题:</strong>         
+          </p>
+          <ol>
+       	  </ol>
+          <p><a class="btn btn-default" href="page/travelitineraryaddinfo.html">Go to &raquo;</a></p>
+        </div>                
       </div>
+           
       <hr>
 
       <footer>
