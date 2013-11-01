@@ -206,8 +206,8 @@
 		$('#searchResults').html("0");
 		$.ajax({
 			type : 'POST',
-			//url :'/gotravel/data/test/flightsearch.json',
-			url :'/gotravel/json',
+			url :'/gotravel/data/test/flightsearch.json',
+			//url :'/gotravel/json',
 			dataType : 'json',
 			data : querydata,
 			success : function(data, textStatus, jqXHR){
@@ -252,20 +252,60 @@
 					var flightSegments = originDestinationOptions[i].flightSegment;
 					if(!!flightSegments && flightSegments.length > 0){
 						var row = $(OriginDestinationOptionMediaHTML);
-						$('.stopover',row).html('Stop Over ' + (flightSegments.length -1));
+						$('.stopover',row).html('Transfer:' + (flightSegments.length -1));
 						//$('.media-heading',row).html();
 						for(var j = 0; j < flightSegments.length ; j++){
 							var flightSegment =  flightSegments[j];
 							var flightSegmentMedia = $(flightsegmentHtml);
 							$('.media-heading',flightSegmentMedia).append(
-							  '<strong>Airline:</strong>' + flightSegment.marketingAirline.code
-							  + ' <strong>FlightNumber:</strong>' +  flightSegment.flightNumber
+								  '<ul class="list-inline">'		
+								  + '<li><strong>Airline:</strong>' + flightSegment.marketingAirline.code + '</li>'
+								  + '<li><strong>FlightNumber:</strong>' +  flightSegment.flightNumber + '</li>'
+								  + '<li><strong>Travel Time:</strong>' +  flightSegment.flightDetails.totalTravelTime + 'min</li>'
+								  + '</ul>'
 							);
 							$('.media-body',flightSegmentMedia).append(
-							flightSegment.originLocation.locationCode + ':' + flightSegment.departureDateTime 
-							+ ' <span class="glyphicon glyphicon-chevron-right"></span>' 
-							+ ' ' + flightSegment.destinationLocation.locationCode + '' + flightSegment.arrivalDateTime
-							+ '<br>');
+								'<ul class="list-inline">'
+								+ '<li>' + flightSegment.originLocation.locationCode + ':' + flightSegment.departureDateTime + '</li>'
+								+ '<li><span class="glyphicon glyphicon-chevron-right"></span></li>' 
+								+ '<li>' + flightSegment.destinationLocation.locationCode + ':' + flightSegment.arrivalDateTime + '</li>'
+								+ '<li><strong>Equipment:</strong>' + flightSegment.equipment.airEquipType + '</li>'
+								+ '<li><strong>Stop:</strong>' + flightSegment.stopQuantity + '</li>'
+								+ '<li><strong>smoking:</strong>' + flightSegment.smokingAllowed + '</li>'
+								+ '</ul>'
+							);
+							var operationTime = flightSegment.daysOfOperation.operationSchedule.operationTimes.operationTime;
+							var operationScheduleString = '<ul class="list-inline"><li><strong>Operation Schedule:</strong></li>';
+							for(var dayofweek in operationTime){
+								if(operationTime[dayofweek] == true){
+									operationScheduleString = operationScheduleString
+									+ '<li>' + dayofweek + '</li>'
+								}
+							}
+							operationScheduleString = operationScheduleString + '</ul>';
+							$('.media-body',flightSegmentMedia).append(operationScheduleString);
+							
+							//meals
+							var meals = flightSegment.meal;
+							var mealsString = '<ul class="list-inline"><li><strong>Meals:</strong></li>';
+							for(var mealsindex = 0 ; mealsindex < meals.length; mealsindex++){
+								mealsString = mealsString
+								+ '<li>' +  meals[mealsindex].mealCode + '</li>'
+							}
+							mealsString = mealsString + '</ul>';
+							$('.media-body',flightSegmentMedia).append(mealsString);
+							
+							//bookingClassAvail
+							var classAvails = flightSegment.bookingClassAvail;
+							var classAvailString = '<ul class="list-inline"><li><strong>Class:</strong></li>';
+							for(var classIndex = 0 ; classIndex < classAvails.length ; classIndex++ ){
+								classAvailString = classAvailString 
+								+ '<li>'+ classAvails[classIndex].resBookDesigCode
+								+ '(' + classAvails[classIndex].availability + ')</li>';
+							}
+							classAvailString = classAvailString + '</ul>';
+							$('.media-body',flightSegmentMedia).append(classAvailString);
+							
 							row.append(flightSegmentMedia);
 						}
 						$('#resultContent').append(row);
