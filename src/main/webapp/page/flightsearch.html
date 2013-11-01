@@ -206,8 +206,8 @@
 		$('#searchResults').html("0");
 		$.ajax({
 			type : 'POST',
-			url :'/gotravel/data/test/flightsearch.json',
-			//url :'/gotravel/json',
+			//url :'/gotravel/data/test/flightsearch.json',
+			url :'/gotravel/json',
 			dataType : 'json',
 			data : querydata,
 			success : function(data, textStatus, jqXHR){
