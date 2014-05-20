@@ -1,0 +1,32 @@
+https://drc.sabre.com/oer/
+
+Username: roy.liao@signettours.com
+Pass: a2s0po712
+你可以上去看看，里面有所有服务的说明和参数XML的格式说明，你有问题可以跟我联系
+
+
+http://webservices.sabre.com/wsdl/sabreXML1.0.00/usg/SessionCreateRQ.wsdl
+
+#OTA_AirAvailLLSRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.ota.airavail -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/tpfc/OTA_AirAvailLLS2.0.0RQ.wsdl
+
+#FareLLSRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.ota.fare -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/sabreXML1.0.00/tpf/FareLLS1.10.1RQ.wsdl
+
+#TravelItineraryReadLLSRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.travelitineraryread -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/tpfc/TravelItineraryReadLLS2.0.0RQ.wsdl
+
+#TravelItineraryAddInfoLLSRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.travelitineraryaddinfo -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/tpfc/TravelItineraryAddInfoLLS2.0.0RQ.wsdl
+
+#OTA_AirBookLLSRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.ota.airbook -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/tpfc/OTA_AirBookLLS2.0.0RQ.wsdl
+
+#AirSeatLLSRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.airseat -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/tpfc/AirSeatLLS2.0.0RQ.wsdl
+
+#EndTransactionRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.endtransaction -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/tpfc/EndTransactionLLS2.0.0RQ.wsdl
+
+#OTA_AirPriceLLSRQ
+wsimport -d classes -s src -p com.itsum.sabre.client.dto.ota.airprice -Xnocompile -B-XautoNameResolution http://webservices.sabre.com/wsdl/tpfc/OTA_AirPriceLLS2.1.0RQ.wsdl
